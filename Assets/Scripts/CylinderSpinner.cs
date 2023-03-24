@@ -73,10 +73,11 @@ public class CylinderSpinner : MonoBehaviour {
             currentRotation += spinSpeed * spinDir;
             spinTime += Time.deltaTime;
             spinSpeed = Mathf.Lerp(spinSpeed, 0, spinTime / spinDuration);
-            spinAudio.volume = Mathf.Clamp(spinSpeed, 0, 1);
+            spinAudio.volume = Mathf.Clamp(spinSpeed, 0, 0.5f);
             if (spinSpeed < minSpinSpeed) {
                 // SPIN DONE. LOGIC TO HANDLE NEXT STEPS SHOULD GO HERE
                 spinSpeed = 0f;
+                finalClick.PlayOneShot(clickSound);
             }
         }
         
@@ -90,7 +91,9 @@ public class CylinderSpinner : MonoBehaviour {
             
             if (!isDragging && spinSpeed > spinSpeedSoundThreshold && !spinAudio.isPlaying)
                 spinAudio.Play();
-            else if (spinSpeed <= spinSpeedSoundThreshold && Mathf.Abs(carveOut.localPosition.y - newY) > carveOutRange / 2)
+            else if (spinSpeed <= spinSpeedSoundThreshold 
+                     && (spinSpeed > minSpinSpeed + 0.01 || isDragging) // added in a minimum spin speed to leave a small silent gap before we play the final click sound 
+                     && Mathf.Abs(carveOut.localPosition.y - newY) > carveOutRange / 2)
                 clickAudio.PlayOneShot(clickSound);
 
             var carveOutLocalPosition = carveOut.localPosition;

@@ -1028,7 +1028,7 @@ MonoBehaviour:
   spinSpeedSoundThreshold: 0.2
   spinAudio: {fileID: 1389561452}
   clickAudio: {fileID: 1389561453}
-  finalClick: {fileID: 0}
+  finalClick: {fileID: 1389561454}
   clickSound: {fileID: 8300000, guid: 65d67a1ae9feac74c869965995b865a9, type: 3}
 --- !u!82 &1389561452
 AudioSource:
@@ -1235,7 +1235,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 0.6
+  m_Pitch: 0.9
   Loop: 0
   Mute: 0
   Spatialize: 0
