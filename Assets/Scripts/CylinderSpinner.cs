@@ -31,6 +31,7 @@ public class CylinderSpinner : MonoBehaviour {
 
     public AudioSource spinAudio;
     public AudioSource clickAudio;
+    public AudioSource finalClick;
     public AudioClip clickSound;
     
     // Start is called before the first frame update
@@ -41,6 +42,7 @@ public class CylinderSpinner : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        // handling player input
         if (Input.GetMouseButtonDown(0)) {
             isDragging = true;
             startMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -65,17 +67,20 @@ public class CylinderSpinner : MonoBehaviour {
                 spinDir = -1;
             }
         }
-
+        
+        // Handling the spin, slowdown, and detecting when the spin is done
         if (spinSpeed > 0) {
             currentRotation += spinSpeed * spinDir;
             spinTime += Time.deltaTime;
             spinSpeed = Mathf.Lerp(spinSpeed, 0, spinTime / spinDuration);
             spinAudio.volume = Mathf.Clamp(spinSpeed, 0, 1);
-            if (spinSpeed < minSpinSpeed)
+            if (spinSpeed < minSpinSpeed) {
+                // SPIN DONE. LOGIC TO HANDLE NEXT STEPS SHOULD GO HERE
                 spinSpeed = 0f;
-            print(spinSpeed);
+            }
         }
         
+        // handling the animation of the cylinder carveouts and the sound of the cylinder spinning
         for (int i = 0; i < carveOuts.Length; i++) {
             var carveOut = carveOuts[i];
             var newY = (currentRotation + carveOutRange * ((float) i / carveOuts.Length )) % carveOutRange;
@@ -87,11 +92,11 @@ public class CylinderSpinner : MonoBehaviour {
                 spinAudio.Play();
             else if (spinSpeed <= spinSpeedSoundThreshold && Mathf.Abs(carveOut.localPosition.y - newY) > carveOutRange / 2)
                 clickAudio.PlayOneShot(clickSound);
-            
-            carveOut.localPosition = new Vector3(carveOut.localPosition.x, newY, carveOut.localPosition.z);
+
+            var carveOutLocalPosition = carveOut.localPosition;
+            carveOutLocalPosition = new Vector3(carveOutLocalPosition.x, newY, carveOutLocalPosition.z);
+            carveOut.localPosition = carveOutLocalPosition;
         }
-
-
     }
 
     private void OnDrawGizmos() {
