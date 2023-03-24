@@ -27,14 +27,14 @@ public class CylinderSpinner : MonoBehaviour {
     public float spinDuration;
     private float spinTime;
     public float minSpinSpeed = 0.01f;
+    public float spinSpeedSoundThreshold;
 
-    private AudioSource audio;
+    public AudioSource spinAudio;
+    public AudioSource clickAudio;
     public AudioClip clickSound;
     
     // Start is called before the first frame update
     void Start() {
-        audio = GetComponent<AudioSource>();
-        
         carveOuts = carveOutGroupT.GetComponentsInChildren<Transform>();
         carveOuts = carveOuts.Skip(1).ToArray();
     }
@@ -45,6 +45,7 @@ public class CylinderSpinner : MonoBehaviour {
             isDragging = true;
             startMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             spinSpeed = 0;
+            spinAudio.Stop();
         }
         else if (Input.GetMouseButton(0)) {
             lastMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -69,6 +70,7 @@ public class CylinderSpinner : MonoBehaviour {
             currentRotation += spinSpeed * spinDir;
             spinTime += Time.deltaTime;
             spinSpeed = Mathf.Lerp(spinSpeed, 0, spinTime / spinDuration);
+            spinAudio.volume = Mathf.Clamp(spinSpeed, 0, 1);
             if (spinSpeed < minSpinSpeed)
                 spinSpeed = 0f;
             print(spinSpeed);
@@ -80,9 +82,11 @@ public class CylinderSpinner : MonoBehaviour {
             if (newY < 0)
                 newY += carveOutRange;
             newY += carveOutOffset;
-            // cheap way of checking if the carve out did a loop around the cylinder
-            if (Mathf.Abs(carveOut.localPosition.y - newY) > carveOutRange / 2)
-                audio.PlayOneShot(clickSound);
+            
+            if (!isDragging && spinSpeed > spinSpeedSoundThreshold && !spinAudio.isPlaying)
+                spinAudio.Play();
+            else if (spinSpeed <= spinSpeedSoundThreshold && Mathf.Abs(carveOut.localPosition.y - newY) > carveOutRange / 2)
+                clickAudio.PlayOneShot(clickSound);
             
             carveOut.localPosition = new Vector3(carveOut.localPosition.x, newY, carveOut.localPosition.z);
         }
