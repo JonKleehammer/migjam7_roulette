@@ -6,12 +6,13 @@ using UnityEngine;
 
 public class CylinderSpinner : MonoBehaviour {
 
+    public float weakSpinThreshold;
+    
     private bool isDragging = false;
 
     public Transform carveOutGroupT;
     [SerializeField]
     private Transform[] carveOuts;
-    public float carveOutSpacing;
     public float carveOutRange = 3f;
     public float carveOutOffset;
 
@@ -19,10 +20,8 @@ public class CylinderSpinner : MonoBehaviour {
     private float currentRotation = 0;
     private Vector3 startMousePos;
     private Vector3 lastMousePos;
-    private Vector3 spinVelocity = Vector3.zero;
     private float spinSpeed = 0;
     private float spinDir = 1;
-    public float spinFriction;
     private float peakSpin = 0;
     public float spinDuration;
     private float spinTime;
@@ -78,6 +77,11 @@ public class CylinderSpinner : MonoBehaviour {
                 // SPIN DONE. LOGIC TO HANDLE NEXT STEPS SHOULD GO HERE
                 spinSpeed = 0f;
                 finalClick.PlayOneShot(clickSound);
+                print(peakSpin);
+                if (peakSpin > weakSpinThreshold)
+                    print("Good spin!");
+                else
+                    print("Weak spin, bro.");
             }
         }
         
@@ -92,7 +96,7 @@ public class CylinderSpinner : MonoBehaviour {
             if (!isDragging && spinSpeed > spinSpeedSoundThreshold && !spinAudio.isPlaying)
                 spinAudio.Play();
             else if (spinSpeed <= spinSpeedSoundThreshold 
-                     && (spinSpeed > minSpinSpeed + 0.01 || isDragging) // added in a minimum spin speed to leave a small silent gap before we play the final click sound 
+                     && (spinSpeed > minSpinSpeed + 0.01f || isDragging) // added in a minimum spin speed to leave a small silent gap before we play the final click sound 
                      && Mathf.Abs(carveOut.localPosition.y - newY) > carveOutRange / 2)
                 clickAudio.PlayOneShot(clickSound);
 
