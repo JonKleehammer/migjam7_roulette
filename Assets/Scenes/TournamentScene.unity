@@ -683,12 +683,12 @@ GameObject:
   - component: {fileID: 686391241}
   - component: {fileID: 686391242}
   m_Layer: 5
-  m_Name: SpinHelp
+  m_Name: SpinTutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &686391241
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1484,6 +1484,7 @@ MonoBehaviour:
   clickAudio: {fileID: 1389561453}
   finalClick: {fileID: 1389561454}
   clickSound: {fileID: 8300000, guid: 65d67a1ae9feac74c869965995b865a9, type: 3}
+  spinTutorial: {fileID: 686391240}
 --- !u!82 &1389561452
 AudioSource:
   m_ObjectHideFlags: 0

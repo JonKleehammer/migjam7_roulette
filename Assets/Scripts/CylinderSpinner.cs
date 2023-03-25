@@ -32,6 +32,10 @@ public class CylinderSpinner : MonoBehaviour {
     public AudioSource clickAudio;
     public AudioSource finalClick;
     public AudioClip clickSound;
+
+    public GameObject spinTutorial;
+    public float timeUntilTutorial = 5f;
+    private float timeWithoutSpin = 0f;
     
     // Start is called before the first frame update
     void Start() {
@@ -41,12 +45,20 @@ public class CylinderSpinner : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (spinTime <= 0 && timeWithoutSpin >= timeUntilTutorial)
+            spinTutorial.SetActive(true);
+        else {
+            spinTutorial.SetActive(false);
+            timeWithoutSpin += Time.deltaTime;
+        }
+        
         // handling player input
         if (Input.GetMouseButtonDown(0)) {
             isDragging = true;
             startMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             spinSpeed = 0;
             spinAudio.Stop();
+            timeWithoutSpin = 0f;
         }
         else if (Input.GetMouseButton(0)) {
             lastMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -75,6 +87,8 @@ public class CylinderSpinner : MonoBehaviour {
             if (spinSpeed < minSpinSpeed) {
                 // SPIN DONE. LOGIC TO HANDLE NEXT STEPS SHOULD GO HERE
                 spinSpeed = 0f;
+                spinTime = 0f;
+                timeWithoutSpin = 0f;
                 finalClick.PlayOneShot(clickSound);
                 print(peakSpin);
                 if (peakSpin > weakSpinThreshold)
