@@ -55,16 +55,15 @@ public class CylinderSpinner : MonoBehaviour {
         }
         else if (Input.GetMouseButtonUp(0)) {
             isDragging = false;
-            spinSpeed = lastMousePos.y - Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
-            peakSpin = spinSpeed;
             spinTime = 0f;
-            if (spinSpeed < 0) {
-                spinSpeed *= -1;
+
+            spinSpeed = lastMousePos.y - Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+            if (spinSpeed < 0) 
                 spinDir = 1;
-            }
-            else {
+            else 
                 spinDir = -1;
-            }
+            spinSpeed = Mathf.Abs(spinSpeed);
+            peakSpin = spinSpeed;
         }
         
         // Handling the spin, slowdown, and detecting when the spin is done
