@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
     public AudioClip putAwaySound;
     public CylinderSpinner spinner;
 
-    private int dayNum;
+    public int dayNum = 1;
     private int deathNum;
 
     public int maxRounds = 4;
@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviour {
     }
 
     public void StartDay() {
-        dayNum += 1;
         AssignDeath();
         dRunner.StartDialogue($"Day{dayNum}Start");
     }
@@ -166,5 +165,6 @@ public class GameManager : MonoBehaviour {
     
     public void FinishDay() {
         dRunner.StartDialogue("FinishDay");
+        dayNum += 1;
     }
 }
