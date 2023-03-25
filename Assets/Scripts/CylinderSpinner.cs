@@ -45,6 +45,10 @@ public class CylinderSpinner : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        // don't do anything if dialogue is on the screen.
+        if (GameManager.Instance.IsDialogueRunning())
+            return;
+        
         if (spinTime <= 0 && timeWithoutSpin >= timeUntilTutorial)
             spinTutorial.SetActive(true);
         else {
@@ -91,10 +95,8 @@ public class CylinderSpinner : MonoBehaviour {
                 timeWithoutSpin = 0f;
                 finalClick.PlayOneShot(clickSound);
                 print(peakSpin);
-                if (peakSpin > weakSpinThreshold)
-                    GameManager.Instance.FinishSpin();
-                else
-                    print("Weak spin, bro.");
+                bool wasGoodSpin = peakSpin > weakSpinThreshold;
+                GameManager.Instance.FinishSpin(wasGoodSpin);
             }
         }
         
@@ -125,5 +127,10 @@ public class CylinderSpinner : MonoBehaviour {
             var carveOut = carveOuts[i];
             Gizmos.DrawSphere(carveOut.position, 0.1f);
         }
+    }
+
+    public void Spin() {
+        spinSpeed = 0.5f;
+        peakSpin = spinSpeed;
     }
 }

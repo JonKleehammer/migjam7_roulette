@@ -1,0 +1,14 @@
+﻿title: Day1Start
+---
+Handler: Hello.
+Handler: It's not smart to owe money to The Boss.
+Handler: You two, and the others back in the prison, all made the same mistake.
+Handler: To settle your debts you're going to provide us with entertainment.
+Handler: A russian roulette tournament.
+Handler: If you win, consider your debts paid.
+Handler: If you lose, well... You won't have to worry about debt anymore.
+Handler: Stay sitting back to back, and if you don't mind... Talk to each other.
+Handler: Talking makes it more fun for everyone.
+Handler: Take this gun, you go first.
+<<start_new_round GameManager>>
+===

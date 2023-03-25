@@ -1,0 +1,20 @@
+﻿title: WeakSpin
+position: -308,-318
+---
+Handler: Come on, that spin was too slow.
+Handler: Try again.
+===
+title: ReturnGun
+position: -306,-178
+---
+???: Your turn again.
+<<start_new_round GameManager>>
+===
+title: FinishDay
+position: -306,-36
+---
+Handler: Congratulations.
+Handler: You live another day.
+Handler: Time to go back to the prison.
+<<load_next_day GameManager>>
+===

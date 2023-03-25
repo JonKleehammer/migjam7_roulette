@@ -1,0 +1,56 @@
+﻿title: Death1Start
+position: -350,-307
+---
+The Other: Welcome back, old friend...
+The Other: Another death that you'd like undone, I assume..?
+The Other: One more chance for glory..?
+The Other: A chance to reach your goal that is just out of reach...
+<<jump OtherChoice>>
+===
+title: Death2Start
+position: -358,-157
+---
+The Other: Back so soon..?
+The Other: Might I remind you that you only have so much that I am interested in...
+The Other: Once you have nothing to give... You will not return to the living...
+<<jump OtherChoice>>
+===
+title: Death3Start
+position: -354,-13
+---
+The Other: You're running out of offerings...
+<<jump OtherChoice>>
+===
+title: Death4Start
+position: -347,126
+---
+The Other: One more chance, for our very special "hero"...
+The Other: I hope it has all been worth it...
+<<jump OtherChoice>>
+===
+title: OtherChoice
+position: 67,-92
+---
+The Other: What will you give this time..?
+-> Heart
+    The Other: Very well... Who needs compassion or empathy anyway..?
+    The Other: It matters not with what you're pursuing, right..?
+-> Mind
+    The Other: Excellent choice... Why bother with curiousity and expanding your knowledge..?
+    The Other: You already know what you want...
+-> Soul
+    The Other: I don't see why mortals even have souls to begin with...
+    The Other: Forget your hobbies and passions, pursue your goal...
+-> Feeling
+    The Other: Yes... Feelings will only get in the way of your goal...
+    The Other: I will make you better than before...
+<<jump OtherFarewell>>
+===
+
+title: OtherFarewell
+position: 323,-89
+---
+The Other: Pleasure doing... Business... With you...
+The Other: Return from whence you came...
+The Other: And... Good luck.
+===

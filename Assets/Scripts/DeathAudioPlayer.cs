@@ -41,6 +41,6 @@ public class DeathAudioPlayer : MonoBehaviour {
         bodyThudAudio.Play();
 
         yield return new WaitForSeconds(1.0f);
-        GameManager.Instance.LoadOtherWorld();
+        GameManager.Instance.DeathFinished();
     }
 }
