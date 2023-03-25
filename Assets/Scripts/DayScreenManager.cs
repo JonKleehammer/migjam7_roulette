@@ -18,7 +18,10 @@ public class DayScreenManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         duration -= Time.deltaTime;
-        if (duration <= 0f)
-            SceneManager.LoadScene("TournamentScene");
+        if (duration > 0f)
+            return;
+        
+        SceneManager.LoadScene("TournamentScene");
+        GameManager.Instance.StartDay();
     }
 }

@@ -23,7 +23,10 @@ public class GameManager : MonoBehaviour {
     private int currentRound;
     private int deathRound;
     private bool playerWillDie;
-    private bool playerTurn = true;
+    public bool playerTurn = true;
+
+    public GameObject bagOnHead;
+    public AudioClip removeBagSound;
 
     public static GameManager Instance { get; private set; }
     private void Awake() {
@@ -61,7 +64,7 @@ public class GameManager : MonoBehaviour {
         // first 2 days are scripted
         switch (dayNum) {
             case 1:
-                deathRound = 1;
+                deathRound = 3;
                 playerWillDie = false;
                 return;
             case 2:
@@ -73,6 +76,12 @@ public class GameManager : MonoBehaviour {
         // the rest are based on luck, but with an assigned turn of death and who will die
         // this is to ensure we have enough dialogue and that someone will die in a reasonable time frame
         deathRound = Random.Range(1, maxRounds + 1);
+    }
+
+    [YarnCommand("remove_bag")]
+    public void RemoveBag() {
+        bagOnHead.SetActive(false);
+        audio.PlayOneShot(removeBagSound);
     }
 
     [YarnCommand("start_new_round")]
@@ -160,7 +169,7 @@ public class GameManager : MonoBehaviour {
     
     [YarnCommand("load_next_day")]
     public void LoadNextDay() {
-        SceneManager.LoadScene("TournamentScene");
+        SceneManager.LoadScene("NextDayScene");
     }
     
     public void FinishDay() {

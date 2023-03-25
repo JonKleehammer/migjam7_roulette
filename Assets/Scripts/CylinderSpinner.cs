@@ -48,16 +48,12 @@ public class CylinderSpinner : MonoBehaviour {
         // don't do anything if dialogue is on the screen.
         if (GameManager.Instance.IsDialogueRunning())
             return;
-        
-        if (spinTime <= 0 && timeWithoutSpin >= timeUntilTutorial)
-            spinTutorial.SetActive(true);
-        else {
-            spinTutorial.SetActive(false);
-            timeWithoutSpin += Time.deltaTime;
-        }
-        
+
         // handling player input
-        if (Input.GetMouseButtonDown(0)) {
+        if (!GameManager.Instance.playerTurn) {
+            // no interaction from the player while it's their turn
+        }
+        else if (Input.GetMouseButtonDown(0)) {
             isDragging = true;
             startMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             spinSpeed = 0;
@@ -80,6 +76,14 @@ public class CylinderSpinner : MonoBehaviour {
                 spinDir = -1;
             spinSpeed = Mathf.Abs(spinSpeed);
             peakSpin = spinSpeed;
+        }
+        
+        // seeing if we should show the tutorial
+        if (spinTime <= 0 && timeWithoutSpin >= timeUntilTutorial)
+            spinTutorial.SetActive(true);
+        else {
+            spinTutorial.SetActive(false);
+            timeWithoutSpin += Time.deltaTime;
         }
         
         // Handling the spin, slowdown, and detecting when the spin is done
@@ -130,7 +134,7 @@ public class CylinderSpinner : MonoBehaviour {
     }
 
     public void Spin() {
-        spinSpeed = 0.5f;
+        spinSpeed = 2f;
         peakSpin = spinSpeed;
     }
 }

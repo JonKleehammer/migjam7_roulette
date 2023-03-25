@@ -1,0 +1,10 @@
+﻿title: Day2Start
+---
+<<wait 1>>
+<<remove_bag GameManager>>
+Handler: Welcome back, lucky winners.
+Handler: I hope you enjoyed your night in the prison.
+Handler: You both know the rules. Let's have a good show.
+Handler: You go first.
+<<start_new_round GameManager>>
+===
