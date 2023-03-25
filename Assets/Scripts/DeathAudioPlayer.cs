@@ -29,13 +29,13 @@ public class DeathAudioPlayer : MonoBehaviour {
     IEnumerator DeathSounds() {
         // audio.PlayOneShot(gunshotSound);
         gunshotAudio.Play();
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.5f);
         
         // AudioClip randomGoreSound = goreSounds[Random.Range(0, goreSounds.Length)];
         // audio.PlayOneShot(randomGoreSound);
         // audio.PlayOneShot(dropGunSound);'
         gunDropAudio.Play();
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
 
         // audio.PlayOneShot(bodyThudSound);
         bodyThudAudio.Play();
