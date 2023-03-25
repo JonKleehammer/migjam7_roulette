@@ -92,7 +92,7 @@ public class CylinderSpinner : MonoBehaviour {
                 finalClick.PlayOneShot(clickSound);
                 print(peakSpin);
                 if (peakSpin > weakSpinThreshold)
-                    print("Good spin!");
+                    GameManager.Instance.FinishSpin();
                 else
                     print("Weak spin, bro.");
             }

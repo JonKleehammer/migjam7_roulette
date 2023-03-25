@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class GunManager : MonoBehaviour {
 
-    private AudioSource audio;
     public AudioClip takeOutSound;
     public AudioClip putAwaySound;
     
     // Start is called before the first frame update
     void Start() {
-        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -21,11 +19,11 @@ public class GunManager : MonoBehaviour {
     
     public void TakeOutGun() {
         gameObject.SetActive(true);
-        audio.PlayOneShot(takeOutSound);
+        GameManager.Instance.audio.PlayOneShot(takeOutSound);
     }
 
     public void PutAwayGun() {
         gameObject.SetActive(false);
-        audio.PlayOneShot(putAwaySound);
+        GameManager.Instance.audio.PlayOneShot(putAwaySound);
     }
 }
