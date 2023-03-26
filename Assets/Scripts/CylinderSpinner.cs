@@ -103,7 +103,6 @@ public class CylinderSpinner : MonoBehaviour {
                 waitingForSpin = false;
                 spinAudio.Stop();
                 finalClick.PlayOneShot(clickSound);
-                print(peakSpin);
                 bool wasGoodSpin = peakSpin > weakSpinThreshold;
                 GameManager.Instance.FinishSpin(wasGoodSpin);
             }
