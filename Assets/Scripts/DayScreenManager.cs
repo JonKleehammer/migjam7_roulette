@@ -22,6 +22,5 @@ public class DayScreenManager : MonoBehaviour {
             return;
         
         SceneManager.LoadScene("TournamentScene");
-        GameManager.Instance.StartDay();
     }
 }

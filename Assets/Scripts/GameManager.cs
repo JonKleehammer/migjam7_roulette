@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour {
     public DialogueRunner dRunner;
     public AudioSource audio;
 
-    public DeathAudioPlayer deathAudioPlayer;
+    private DeathAudioPlayer deathAudioPlayer;
 
-    public GameObject revolver;
+    private GameObject revolver;
     public AudioClip takeOutSound;
     public AudioClip putAwaySound;
     public CylinderSpinner spinner;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
     private bool playerWillDie;
     public bool playerTurn = true;
 
-    public GameObject bagOnHead;
+    private GameObject bagOnHead;
     public AudioClip removeBagSound;
 
     public static GameManager Instance { get; private set; }
@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour {
     
     // Start is called before the first frame update
     void Start() {
-        StartDay();
     }
 
     // Update is called once per frame
@@ -56,19 +55,29 @@ public class GameManager : MonoBehaviour {
     }
 
     public void StartDay() {
+        GetReferences();
+        currentRound = 0;
+        playerTurn = true;
         AssignDeath();
         dRunner.StartDialogue($"Day{dayNum}Start");
+    }
+
+    private void GetReferences() {
+        var references = FindObjectOfType<TournamentSceneReferences>();
+        revolver = references.revolver;
+        bagOnHead = references.bagOnHead;
+        deathAudioPlayer = references.deathAudioPlayer;
     }
     
     public void AssignDeath() {
         // first 2 days are scripted
         switch (dayNum) {
             case 1:
-                deathRound = 3;
+                deathRound = 1;
                 playerWillDie = false;
                 return;
             case 2:
-                deathRound = 2;
+                deathRound = 1;
                 playerWillDie = true;
                 return;
         }
@@ -154,6 +163,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void KillPlayer() {
+        revolver.SetActive(false);
         deathNum += 1;
         deathAudioPlayer.StartCoroutine("DeathSounds");
     }
@@ -164,7 +174,7 @@ public class GameManager : MonoBehaviour {
 
     public void LoadOtherWorld() {
         SceneManager.LoadScene("OtherWorldScene");
-        dRunner.StartDialogue($"Death{deathNum}Other");
+        dRunner.StartDialogue($"Death{deathNum}Start");
     }
     
     [YarnCommand("load_next_day")]

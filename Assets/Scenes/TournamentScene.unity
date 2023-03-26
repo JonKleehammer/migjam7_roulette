@@ -1546,15 +1546,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dRunner: {fileID: 3579681405303123050}
   audio: {fileID: 981934471}
-  deathAudioPlayer: {fileID: 473224397}
-  revolver: {fileID: 2121936919}
   takeOutSound: {fileID: 8300000, guid: 3cd279bdcf507274da0edc5dfca50dc8, type: 3}
   putAwaySound: {fileID: 8300000, guid: ca342e1d0cc55274b9ceb9ff5c111353, type: 3}
   spinner: {fileID: 1389561451}
   dayNum: 1
   maxRounds: 4
   playerTurn: 1
-  bagOnHead: {fileID: 459445873}
   removeBagSound: {fileID: 8300000, guid: a1116174493f62b4b89efe9779cd0451, type: 3}
 --- !u!82 &981934471
 AudioSource:
@@ -1652,6 +1649,53 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &981942245
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 981942246}
+  - component: {fileID: 981942247}
+  m_Layer: 0
+  m_Name: SceneReferences
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &981942246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981942245}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.108435, y: 0.49548265, z: -0.047635354}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &981942247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981942245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6434e5d2aabe27548aa1ca93c536fdb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  revolver: {fileID: 2121936919}
+  deathAudioPlayer: {fileID: 473224397}
+  bagOnHead: {fileID: 459445873}
 --- !u!114 &1066138554 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6323935187928403899, guid: 638e885a48f1a46c29aaa1b64688b208, type: 3}
