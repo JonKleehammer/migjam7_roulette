@@ -494,7 +494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.83137256}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1815,6 +1815,7 @@ MonoBehaviour:
   removeBagSound: {fileID: 8300000, guid: a1116174493f62b4b89efe9779cd0451, type: 3}
   gunCockSound: {fileID: 8300000, guid: 26492766ae0758444ab539d271f93b1d, type: 3}
   dryFireSound: {fileID: 8300000, guid: c8dc508aa834b974e8e1b2008de7882c, type: 3}
+  gunshotSound: {fileID: 8300000, guid: 4969b729c84509248b3000ecce2772fa, type: 3}
 --- !u!82 &981934471
 AudioSource:
   m_ObjectHideFlags: 0

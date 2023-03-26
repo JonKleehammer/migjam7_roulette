@@ -7,7 +7,7 @@ using Yarn.Unity;
 
 public class DayScreenManager : MonoBehaviour {
 
-    public float duration = 5f;
+    public float duration = 3f;
     private int dayNum;
     
     public TextMeshProUGUI text;
@@ -30,9 +30,7 @@ public class DayScreenManager : MonoBehaviour {
         
         if (dayNum <= 5)
             SceneManager.LoadScene("TournamentScene");
-        else {
+        else
             SceneManager.LoadScene("EndingScene");
-            GameManager.Instance.dRunner.StartDialogue("Ending");
-        }
     }
 }

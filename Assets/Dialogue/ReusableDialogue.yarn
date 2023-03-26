@@ -18,3 +18,12 @@ Warden: You live another day.
 Warden: Time to go back to the prison.
 <<load_next_day GameManager>>
 ===
+title: Survived
+position: -294,103
+---
+Warden: We have a winner!
+Warden: You are very lucky.
+Warden: Consider your debts paid.
+Warden: You're free now.
+<<load_next_day GameManager>>
+===

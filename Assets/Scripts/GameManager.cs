@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
 
     public AudioClip gunCockSound;
     public AudioClip dryFireSound;
+    public AudioClip gunshotSound;
 
     private GameObject gunToHeadButton;
     private GameObject pullTriggerButton;
@@ -69,6 +70,10 @@ public class GameManager : MonoBehaviour {
         GetReferences();
         currentRound = 0;
         playerTurn = true;
+        for (int i = 0; i < 10; i++) {
+            AssignDeath();
+            print($"player: {playerWillDie} round: {deathRound}");
+        }
         AssignDeath();
         dRunner.StartDialogue($"Day{dayNum}Start");
     }
@@ -100,6 +105,7 @@ public class GameManager : MonoBehaviour {
         // the rest are based on luck, but with an assigned turn of death and who will die
         // this is to ensure we have enough dialogue and that someone will die in a reasonable time frame
         deathRound = Random.Range(1, maxRounds + 1);
+        playerWillDie = Random.Range(0, 2) == 0;
     }
 
     [YarnCommand("remove_bag")]
@@ -157,7 +163,7 @@ public class GameManager : MonoBehaviour {
 
     public void PullTrigger() {
         pullTriggerButton.SetActive(false);
-        if (playerWillDie && deathRound == currentRound)
+        if (playerWillDie && deathRound <= currentRound)
             KillPlayer();
         else {
             audio.PlayOneShot(dryFireSound);
@@ -193,7 +199,7 @@ public class GameManager : MonoBehaviour {
         print("opponent pulling trigger");
 
         // if they die
-        if (!playerWillDie && deathRound == currentRound) {
+        if (!playerWillDie && deathRound <= currentRound) {
             print("opponent dies");
             KillOpponent();
             yield break;
@@ -221,6 +227,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void KillPlayer() {
+        bagOnHead.SetActive(true);
         revolver.SetActive(false);
         deathNum += 1;
         deathAudioPlayer.StartCoroutine("DeathSounds");
@@ -242,7 +249,15 @@ public class GameManager : MonoBehaviour {
     }
     
     public void FinishDay() {
-        dRunner.StartDialogue("FinishDay");
+        if (dayNum < 5)
+            dRunner.StartDialogue("FinishDay");
+        else
+            dRunner.StartDialogue("Survived");
         dayNum += 1;
+    }
+    
+    [YarnCommand("play_gunshot")]
+    public void GunShotSound() {
+        audio.PlayOneShot(gunshotSound);
     }
 }

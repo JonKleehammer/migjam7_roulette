@@ -1,4 +1,4 @@
-﻿title: Day4Tournament
+﻿title: Day4Start
 ---
 <<wait 3>>
 <<remove_bag GameManager>>

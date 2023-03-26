@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Yarn.Unity;
 
 public class EndingScreenManager : MonoBehaviour {
@@ -9,7 +10,7 @@ public class EndingScreenManager : MonoBehaviour {
     
     // Start is called before the first frame update
     void Start() {
-        
+        GameManager.Instance.dRunner.StartDialogue("Ending");
     }
 
     // Update is called once per frame
@@ -17,8 +18,8 @@ public class EndingScreenManager : MonoBehaviour {
         
     }
     
-    [YarnCommand("load_stats")]
-    public void OpenStatsPanel() {
-        statsPanel.SetActive(true);
+    [YarnCommand("load_credits")]
+    public void LoadCredits() {
+        SceneManager.LoadScene("Credits");
     }
 }
