@@ -14,12 +14,12 @@ public class TournamentSceneReferences : MonoBehaviour {
     public GameObject handOffGunButton;
     
     public void Start() {
-        // start day is called here because we need to ensure that all our objects are loaded in
-        GameManager.Instance.StartDay();
-        
         gunToHeadButton.GetComponent<Button>().onClick.AddListener(GameManager.Instance.PutGunToHead);
         pullTriggerButton.GetComponent<Button>().onClick.AddListener(GameManager.Instance.PullTrigger);
         handOffGunButton.GetComponent<Button>().onClick.AddListener(GameManager.Instance.HandOffGun);
+        
+        // start day is called here because we need to ensure that all our objects are loaded in
+        GameManager.Instance.StartDay();
     }
     
 }

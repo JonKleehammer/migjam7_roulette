@@ -2,6 +2,7 @@
 ---
 <<wait 3>>
 <<remove_bag GameManager>>
+<<wait 1>>
 Warden: Good day.
 Warden: You're nearing the end.
 Warden: I wish you both good luck.

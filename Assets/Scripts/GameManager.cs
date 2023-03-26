@@ -9,15 +9,6 @@ public class GameManager : MonoBehaviour {
     public DialogueRunner dRunner;
     public AudioSource audio;
 
-    // public TournamentSceneReferences sceneReferences;
-    
-    private DeathAudioPlayer deathAudioPlayer;
-
-    private GameObject revolver;
-    public AudioClip takeOutSound;
-    public AudioClip putAwaySound;
-    public CylinderSpinner spinner;
-
     public int dayNum = 1;
     private int deathNum;
 
@@ -29,16 +20,20 @@ public class GameManager : MonoBehaviour {
     private bool wasGoodSpin;
 
     private GameObject bagOnHead;
-    public AudioClip removeBagSound;
-
-    public AudioClip gunCockSound;
-    public AudioClip dryFireSound;
-    public AudioClip gunshotSound;
-
+    private GameObject revolver;
+    public CylinderSpinner spinner;
     private GameObject gunToHeadButton;
     private GameObject pullTriggerButton;
     private GameObject handOffGunButton;
+    private DeathAudioPlayer deathAudioPlayer;
 
+    public AudioClip removeBagSound;
+    public AudioClip takeOutSound;
+    public AudioClip putAwaySound;
+    public AudioClip gunCockSound;
+    public AudioClip dryFireSound;
+    public AudioClip gunshotSound;
+    
     public static GameManager Instance { get; private set; }
     private void Awake() {
         if (Instance != null) {
@@ -48,32 +43,15 @@ public class GameManager : MonoBehaviour {
         Instance = this;
         DontDestroyOnLoad(this);
     }
-    
-    
-    
-    // Start is called before the first frame update
-    void Start() {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public bool IsDialogueRunning() {
         return dRunner.IsDialogueRunning;
     }
 
     public void StartDay() {
-        print("Start Day");
         GetReferences();
         currentRound = 0;
         playerTurn = true;
-        for (int i = 0; i < 10; i++) {
-            AssignDeath();
-            print($"player: {playerWillDie} round: {deathRound}");
-        }
         AssignDeath();
         dRunner.StartDialogue($"Day{dayNum}Start");
     }
@@ -93,7 +71,7 @@ public class GameManager : MonoBehaviour {
         // first 2 days are scripted
         switch (dayNum) {
             case 1:
-                deathRound = 3;
+                deathRound = 2;
                 playerWillDie = false;
                 return;
             case 2:
@@ -116,7 +94,6 @@ public class GameManager : MonoBehaviour {
 
     [YarnCommand("start_new_round")]
     public void StartNewRound() {
-        print("Start new round");
         playerTurn = true;
         spinner.waitingForSpin = true;
         currentRound += 1;
@@ -141,7 +118,6 @@ public class GameManager : MonoBehaviour {
             return;
         }
         
-        print($"Spin finsihed for round {currentRound}. player:{playerTurn}");
         if (playerTurn)
             PlayerFinishSpin();
         else
@@ -149,12 +125,10 @@ public class GameManager : MonoBehaviour {
     }
 
     public void PlayerFinishSpin() {
-        // activate button to put gun to head
         gunToHeadButton.SetActive(true);
     }
 
     public void PutGunToHead() {
-        //active gun to pull trigger
         revolver.SetActive(false);
         audio.PlayOneShot(gunCockSound);
         gunToHeadButton.SetActive(false);
@@ -179,38 +153,29 @@ public class GameManager : MonoBehaviour {
     }
 
     IEnumerator SimulateOpponentTurn() {
-        print("starting opponent turn");
         yield return new WaitForSeconds(1f);
-        print("opponent taking out gun");
         revolver.transform.position += Vector3.up * 10f;
         TakeOutGun();
         yield return new WaitForSeconds(1f);
-        print("opponent spinning");
         spinner.Spin();
     }
     
 
     IEnumerator FinishOpponentSpin() {
-        print("opponent finished spinning");
         yield return new WaitForSeconds(1f);
-        print("opponent cocking gun");
         audio.PlayOneShot(gunCockSound);
         yield return new WaitForSeconds(1f);
-        print("opponent pulling trigger");
 
         // if they die
         if (!playerWillDie && deathRound <= currentRound) {
-            print("opponent dies");
             KillOpponent();
             yield break;
         }
         
-        print("opponent dry fires");
         audio.PlayOneShot(dryFireSound);
         yield return new WaitForSeconds(1f);
         PutAwayGun();
         yield return new WaitForSeconds(1f);
-        print("opponent return gun");
         revolver.transform.position += Vector3.down * 10f;
         ReturnGun();
     }

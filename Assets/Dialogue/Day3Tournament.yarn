@@ -2,6 +2,7 @@
 ---
 <<wait 3>>
 <<remove_bag GameManager>>
+<<wait 1>>
 Warden: Good morning you two.
 Warden: You've been doing great so far.
 Warden: The crowd has been loving the games.

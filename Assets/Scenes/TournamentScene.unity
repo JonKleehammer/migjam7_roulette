@@ -1731,7 +1731,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -100
   m_TargetDisplay: 0
 --- !u!224 &949745767
 RectTransform:
@@ -4077,7 +4077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4935123090281167011, guid: 67dde1b92175d4745aaea386e7555d40, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 80
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4935123090281167011, guid: 67dde1b92175d4745aaea386e7555d40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4431,7 +4431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6323935187928403879, guid: 638e885a48f1a46c29aaa1b64688b208, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 80
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6323935187928403879, guid: 638e885a48f1a46c29aaa1b64688b208, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

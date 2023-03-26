@@ -7,16 +7,8 @@ using UnityEngine;
 public class CylinderSpinner : MonoBehaviour {
 
     public float weakSpinThreshold;
-
-    [SerializeField]
-    private bool _waitingForSpin;
-    public bool waitingForSpin {
-        get { return _waitingForSpin; }
-        set {
-            print(value);
-            _waitingForSpin = value;
-        }
-    }
+    
+    public bool waitingForSpin;
     
     private bool isDragging = false;
 
@@ -37,15 +29,15 @@ public class CylinderSpinner : MonoBehaviour {
     private float spinTime;
     public float minSpinSpeed = 0.01f;
     public float spinSpeedSoundThreshold;
-
+    
+    public GameObject spinTutorial;
+    public float timeUntilTutorial = 5f;
+    private float timeWithoutSpin;
+    
     public AudioSource spinAudio;
     public AudioSource clickAudio;
     public AudioSource finalClick;
     public AudioClip clickSound;
-
-    public GameObject spinTutorial;
-    public float timeUntilTutorial = 5f;
-    private float timeWithoutSpin = 0f;
     
     // Start is called before the first frame update
     void Start() {
@@ -146,6 +138,7 @@ public class CylinderSpinner : MonoBehaviour {
         }
     }
 
+    // programatically starting a spin, used for NPC's
     public void Spin() {
         spinSpeed = 3f;
         peakSpin = spinSpeed;

@@ -8,25 +8,26 @@ using Yarn.Unity;
 public class DayScreenManager : MonoBehaviour {
 
     public float duration = 3f;
-    private int dayNum;
     
     public TextMeshProUGUI text;
     
     // Start is called before the first frame update
     void Start() {
-        dayNum = GameManager.Instance.dayNum;
+        StartCoroutine(NextScene());
+    }
 
+
+    IEnumerator NextScene() {
+        var dayNum = GameManager.Instance.dayNum;
         if (dayNum <= 5)
             text.text = $"Day {dayNum}";
         else
             text.text = "Freedom.";
-    }
 
-    // Update is called once per frame
-    void Update() {
-        duration -= Time.deltaTime;
-        if (duration > 0f)
-            return;
+        while (duration > 0f) {
+            duration -= Time.deltaTime;
+            yield return null;
+        }
         
         if (dayNum <= 5)
             SceneManager.LoadScene("TournamentScene");

@@ -2,6 +2,7 @@
 ---
 <<wait 3>>
 <<remove_bag GameManager>>
+<<wait 1>>
 Warden: Welcome to the FINAL ROUND!
 Warden: You've both been lucky so far!
 Warden: But only one of you will leave alive.

@@ -14,33 +14,16 @@ public class DeathAudioPlayer : MonoBehaviour {
     public AudioSource gunDropAudio;
     public AudioSource bodyThudAudio;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator DeathSounds() {
-        // audio.PlayOneShot(gunshotSound);
         gunshotAudio.Play();
         yield return new WaitForSeconds(1.5f);
         
-        // AudioClip randomGoreSound = goreSounds[Random.Range(0, goreSounds.Length)];
-        // audio.PlayOneShot(randomGoreSound);
-        // audio.PlayOneShot(dropGunSound);'
         gunDropAudio.Play();
         yield return new WaitForSeconds(1.0f);
 
-        // audio.PlayOneShot(bodyThudSound);
         bodyThudAudio.Play();
-
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.5f);
+        
         GameManager.Instance.DeathFinished();
     }
 }
