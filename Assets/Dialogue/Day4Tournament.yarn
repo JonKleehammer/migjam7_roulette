@@ -1,0 +1,11 @@
+﻿title: Day4Tournament
+---
+<<wait 3>>
+<<remove_bag GameManager>>
+Warden: Good day.
+Warden: You're nearing the end.
+Warden: I wish you both good luck.
+Warden: Continue until one of you drop.
+Warden: Begin.
+<<start_new_round GameManager>>
+===

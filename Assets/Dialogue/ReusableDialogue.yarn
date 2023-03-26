@@ -1,20 +1,20 @@
 ﻿title: WeakSpin
 position: -308,-318
 ---
-Handler: Come on, that spin was too slow.
-Handler: Try again.
+Warden: Come on, that spin was too slow.
+Warden: Try again.
 ===
 title: ReturnGun
 position: -306,-178
 ---
-???: Your turn again.
+Stranger: Your turn.
 <<start_new_round GameManager>>
 ===
 title: FinishDay
 position: -306,-36
 ---
-Handler: Congratulations.
-Handler: You live another day.
-Handler: Time to go back to the prison.
+Warden: Congratulations.
+Warden: You live another day.
+Warden: Time to go back to the prison.
 <<load_next_day GameManager>>
 ===

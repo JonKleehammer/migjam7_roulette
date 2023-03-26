@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
     public DialogueRunner dRunner;
     public AudioSource audio;
 
+    // public TournamentSceneReferences sceneReferences;
+    
     private DeathAudioPlayer deathAudioPlayer;
 
     private GameObject revolver;
@@ -24,14 +26,22 @@ public class GameManager : MonoBehaviour {
     private int deathRound;
     private bool playerWillDie;
     public bool playerTurn = true;
+    private bool wasGoodSpin;
 
     private GameObject bagOnHead;
     public AudioClip removeBagSound;
 
+    public AudioClip gunCockSound;
+    public AudioClip dryFireSound;
+
+    private GameObject gunToHeadButton;
+    private GameObject pullTriggerButton;
+    private GameObject handOffGunButton;
+
     public static GameManager Instance { get; private set; }
     private void Awake() {
         if (Instance != null) {
-            Destroy(this);
+            Destroy(gameObject);
             return;
         }
         Instance = this;
@@ -55,6 +65,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void StartDay() {
+        print("Start Day");
         GetReferences();
         currentRound = 0;
         playerTurn = true;
@@ -65,8 +76,12 @@ public class GameManager : MonoBehaviour {
     private void GetReferences() {
         var references = FindObjectOfType<TournamentSceneReferences>();
         revolver = references.revolver;
+        spinner = references.spinner;
         bagOnHead = references.bagOnHead;
         deathAudioPlayer = references.deathAudioPlayer;
+        gunToHeadButton = references.gunToHeadButton;
+        pullTriggerButton = references.pullTriggerButton;
+        handOffGunButton = references.handOffGunButton;
     }
     
     public void AssignDeath() {
@@ -95,6 +110,9 @@ public class GameManager : MonoBehaviour {
 
     [YarnCommand("start_new_round")]
     public void StartNewRound() {
+        print("Start new round");
+        playerTurn = true;
+        spinner.waitingForSpin = true;
         currentRound += 1;
         TakeOutGun();
     }
@@ -109,45 +127,85 @@ public class GameManager : MonoBehaviour {
         audio.PlayOneShot(putAwaySound);
     }
 
-    public void FinishSpin(bool wasGoodSpin) {
-        print($"Spin finsihed for round {currentRound}. player:{playerTurn}");
-        if (playerTurn)
-            PlayerFinishSpin(wasGoodSpin);
-        else
-            OpponentFinishSpin();
-    }
-
-    public void PlayerFinishSpin(bool wasGoodSpin) {
+    public void FinishSpin(bool goodSpin) {
+        wasGoodSpin = goodSpin; // used frequently in other parts of the code so storing it
         if (!wasGoodSpin) {
             dRunner.StartDialogue("WeakSpin");
-            return;
-        }
-
-        if (playerWillDie && deathRound == currentRound)
-            KillPlayer();
-        else
-            StartCoroutine(SimulateOpponentTurn());
-    }
-
-    IEnumerator SimulateOpponentTurn() {
-        playerTurn = false;
-        PutAwayGun();
-        yield return new WaitForSeconds(1f);
-        revolver.transform.position += Vector3.up * 10f;
-        TakeOutGun();
-        yield return new WaitForSeconds(1f);
-        spinner.Spin();
-    }
-
-    public void OpponentFinishSpin() {
-        if (!playerWillDie && deathRound == currentRound) {
-            KillOpponent();
+            spinner.waitingForSpin = true;
             return;
         }
         
+        print($"Spin finsihed for round {currentRound}. player:{playerTurn}");
+        if (playerTurn)
+            PlayerFinishSpin();
+        else
+            StartCoroutine(FinishOpponentSpin());
+    }
+
+    public void PlayerFinishSpin() {
+        // activate button to put gun to head
+        gunToHeadButton.SetActive(true);
+    }
+
+    public void PutGunToHead() {
+        //active gun to pull trigger
+        revolver.SetActive(false);
+        audio.PlayOneShot(gunCockSound);
+        gunToHeadButton.SetActive(false);
+        pullTriggerButton.SetActive(true);
+    }
+
+    public void PullTrigger() {
+        pullTriggerButton.SetActive(false);
+        if (playerWillDie && deathRound == currentRound)
+            KillPlayer();
+        else {
+            audio.PlayOneShot(dryFireSound);
+            handOffGunButton.SetActive(true);
+        }
+    }
+
+    public void HandOffGun() {
+        handOffGunButton.SetActive(false);
+        playerTurn = false;
         PutAwayGun();
+        StartCoroutine(SimulateOpponentTurn());
+    }
+
+    IEnumerator SimulateOpponentTurn() {
+        print("starting opponent turn");
+        yield return new WaitForSeconds(1f);
+        print("opponent taking out gun");
+        revolver.transform.position += Vector3.up * 10f;
+        TakeOutGun();
+        yield return new WaitForSeconds(1f);
+        print("opponent spinning");
+        spinner.Spin();
+    }
+    
+
+    IEnumerator FinishOpponentSpin() {
+        print("opponent finished spinning");
+        yield return new WaitForSeconds(1f);
+        print("opponent cocking gun");
+        audio.PlayOneShot(gunCockSound);
+        yield return new WaitForSeconds(1f);
+        print("opponent pulling trigger");
+
+        // if they die
+        if (!playerWillDie && deathRound == currentRound) {
+            print("opponent dies");
+            KillOpponent();
+            yield break;
+        }
+        
+        print("opponent dry fires");
+        audio.PlayOneShot(dryFireSound);
+        yield return new WaitForSeconds(1f);
+        PutAwayGun();
+        yield return new WaitForSeconds(1f);
+        print("opponent return gun");
         revolver.transform.position += Vector3.down * 10f;
-        playerTurn = true;
         ReturnGun();
     }
 
@@ -173,6 +231,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void LoadOtherWorld() {
+        dayNum += 1;
         SceneManager.LoadScene("OtherWorldScene");
         dRunner.StartDialogue($"Death{deathNum}Start");
     }

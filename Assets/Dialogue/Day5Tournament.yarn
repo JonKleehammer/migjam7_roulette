@@ -1,0 +1,12 @@
+﻿title: Day5Tournament
+---
+<<wait 3>>
+<<remove_bag GameManager>>
+Warden: The final round!
+Warden: You've both been lucky so far!
+Warden: But only one of you will leave alive.
+Warden: Everyone one else! Who do you think has luck on their side?
+Warden: Place your bets!
+Warden: Let's get started!
+<<start_new_round GameManager>>
+===

@@ -7,6 +7,16 @@ using UnityEngine;
 public class CylinderSpinner : MonoBehaviour {
 
     public float weakSpinThreshold;
+
+    [SerializeField]
+    private bool _waitingForSpin;
+    public bool waitingForSpin {
+        get { return _waitingForSpin; }
+        set {
+            print(value);
+            _waitingForSpin = value;
+        }
+    }
     
     private bool isDragging = false;
 
@@ -50,8 +60,9 @@ public class CylinderSpinner : MonoBehaviour {
             return;
 
         // handling player input
-        if (!GameManager.Instance.playerTurn) {
-            // no interaction from the player while it's their turn
+        if (!GameManager.Instance.playerTurn || !waitingForSpin) {
+            // no interaction from the player while it's not their turn
+            // or if they already spun
         }
         else if (Input.GetMouseButtonDown(0)) {
             isDragging = true;
@@ -79,7 +90,7 @@ public class CylinderSpinner : MonoBehaviour {
         }
         
         // seeing if we should show the tutorial
-        if (spinTime <= 0 && timeWithoutSpin >= timeUntilTutorial)
+        if (waitingForSpin && spinTime <= 0 && timeWithoutSpin >= timeUntilTutorial)
             spinTutorial.SetActive(true);
         else {
             spinTutorial.SetActive(false);
@@ -97,6 +108,8 @@ public class CylinderSpinner : MonoBehaviour {
                 spinSpeed = 0f;
                 spinTime = 0f;
                 timeWithoutSpin = 0f;
+                waitingForSpin = false;
+                spinAudio.Stop();
                 finalClick.PlayOneShot(clickSound);
                 print(peakSpin);
                 bool wasGoodSpin = peakSpin > weakSpinThreshold;
@@ -134,7 +147,7 @@ public class CylinderSpinner : MonoBehaviour {
     }
 
     public void Spin() {
-        spinSpeed = 2f;
+        spinSpeed = 3f;
         peakSpin = spinSpeed;
     }
 }

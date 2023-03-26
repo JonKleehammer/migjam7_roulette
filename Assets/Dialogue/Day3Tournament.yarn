@@ -1,0 +1,12 @@
+﻿title: Day3Tournament
+---
+<<wait 3>>
+<<remove_bag GameManager>>
+Warden: Good morning you two.
+Warden: You've been doing great so far.
+Warden: The crowd has been loving the games!
+Warden: Let's keep it up.
+Warden: Continue until one of you drop.
+Warden: You start.
+<<start_new_round GameManager>>
+===
