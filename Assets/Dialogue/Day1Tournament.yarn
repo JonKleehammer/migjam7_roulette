@@ -5,7 +5,7 @@ Handler: Hello.
 <<remove_bag GameManager>>
 <<wait 1>>
 Handler: It's not smart to owe money to The Boss.
-Handler: The two of you sitting here, and the others back in the prison, all made the same mistake.
+Handler: The two of you sitting here, and the others back in the prison, all made this same mistake.
 Handler: To settle your debts you're going to provide us with entertainment.
 Handler: A russian roulette tournament.
 Handler: If you win, consider your debts paid.

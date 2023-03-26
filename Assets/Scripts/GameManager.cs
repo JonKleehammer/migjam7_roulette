@@ -73,11 +73,11 @@ public class GameManager : MonoBehaviour {
         // first 2 days are scripted
         switch (dayNum) {
             case 1:
-                deathRound = 1;
+                deathRound = 3;
                 playerWillDie = false;
                 return;
             case 2:
-                deathRound = 1;
+                deathRound = 2;
                 playerWillDie = true;
                 return;
         }

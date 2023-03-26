@@ -2,7 +2,7 @@
 position: -350,-307
 ---
 The Other: Welcome back, old friend...
-The Other: Another death that you'd like undone, I assume..?
+The Other: Another death that you want undone, I assume..?
 The Other: One more chance for glory..?
 The Other: A chance to reach your goal that is just out of reach...
 <<jump OtherChoice>>
