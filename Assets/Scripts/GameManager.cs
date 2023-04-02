@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
     private GameObject bagOnHead;
     private GameObject revolver;
     public CylinderSpinner spinner;
+    private GameObject buttonTutorial;
     private GameObject gunToHeadButton;
     private GameObject pullTriggerButton;
     private GameObject handOffGunButton;
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour {
         spinner = references.spinner;
         bagOnHead = references.bagOnHead;
         deathAudioPlayer = references.deathAudioPlayer;
+        buttonTutorial = references.buttonTutorial;
         gunToHeadButton = references.gunToHeadButton;
         pullTriggerButton = references.pullTriggerButton;
         handOffGunButton = references.handOffGunButton;
@@ -125,10 +127,14 @@ public class GameManager : MonoBehaviour {
     }
 
     public void PlayerFinishSpin() {
+        if (dayNum == 1)
+            buttonTutorial.SetActive(true);
         gunToHeadButton.SetActive(true);
     }
 
     public void PutGunToHead() {
+        if (dayNum == 1)
+            buttonTutorial.SetActive(false);
         revolver.SetActive(false);
         audio.PlayOneShot(gunCockSound);
         gunToHeadButton.SetActive(false);

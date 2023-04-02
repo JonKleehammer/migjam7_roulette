@@ -9,6 +9,7 @@ public class CylinderSpinner : MonoBehaviour {
     public float weakSpinThreshold;
     
     public bool waitingForSpin;
+    private float timeWaitingForSpin;
     
     private bool isDragging = false;
 
@@ -51,6 +52,11 @@ public class CylinderSpinner : MonoBehaviour {
         if (GameManager.Instance.IsDialogueRunning())
             return;
 
+        if (waitingForSpin)
+            timeWaitingForSpin += Time.deltaTime;
+        else
+            timeWaitingForSpin = 0;
+
         // handling player input
         if (!GameManager.Instance.playerTurn || !waitingForSpin) {
             // no interaction from the player while it's not their turn
@@ -71,7 +77,6 @@ public class CylinderSpinner : MonoBehaviour {
         else if (Input.GetMouseButtonUp(0)) {
             isDragging = false;
             spinTime = 0f;
-
             spinSpeed = lastMousePos.y - Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
             if (spinSpeed < 0) 
                 spinDir = 1;
@@ -82,7 +87,7 @@ public class CylinderSpinner : MonoBehaviour {
         }
         
         // seeing if we should show the tutorial
-        if (waitingForSpin && spinTime <= 0 && timeWithoutSpin >= timeUntilTutorial)
+        if ((!Input.GetMouseButton(0) && spinSpeed <= 0 && waitingForSpin) && ((GameManager.Instance.dayNum == 1 && GameManager.Instance.playerTurn) || (timeWaitingForSpin >= timeUntilTutorial)))
             spinTutorial.SetActive(true);
         else {
             spinTutorial.SetActive(false);

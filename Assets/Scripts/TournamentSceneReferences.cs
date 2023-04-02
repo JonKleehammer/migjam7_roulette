@@ -9,6 +9,7 @@ public class TournamentSceneReferences : MonoBehaviour {
     public CylinderSpinner spinner;
     public DeathAudioPlayer deathAudioPlayer;
     public GameObject bagOnHead;
+    public GameObject buttonTutorial;
     public GameObject gunToHeadButton;
     public GameObject pullTriggerButton;
     public GameObject handOffGunButton;
